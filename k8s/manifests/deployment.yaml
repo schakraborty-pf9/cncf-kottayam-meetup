@@ -1,0 +1,22 @@
+# This is a sample deployment manifest file for a simple web application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnb-go-app
+  labels:
+    app: cnb-go-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cnb-go-app
+  template:
+    metadata:
+      labels:
+        app: cnb-go-app
+    spec:
+      containers:
+      - name: cnb-go-app
+        image: chakrabortsu181/cnb-go-app
+        ports:
+        - containerPort: 8080
