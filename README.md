@@ -1,21 +1,32 @@
-**Build Image Using Cloud Native Buildpack**
+****Build Application Image Using Cloud Native Buildpack****
 =====================
-This repository has instruction to build image without Dockerfile (a sample go app) using [Cloud Native Buildpack](https://buildpacks.io/).
+This repository has instruction to build image without Dockerfile (a sample go application) using [Cloud Native Buildpack](https://buildpacks.io/).
 
 Instruction
 -------------------------------------------
 
 * Install required tools stated below.
-* Clone repository `git clone https://github.com/suchakra012/cnb-go-app.git`.
+* Clone repository `git clone https://github.com/schakraborty-pf9/cncf-kottayam-meetup.git`.
 * Build and publish image.
 ```sh
-cd cnb-sample-go
-pack build --publish <image-repo> --builder cloudfoundry/cnb:bionic
+cd cncf-kottayam-meetup
+pack build <registry_name>/<repo_name>/kottayam-view:v1 --path . --builder paketobuildpacks/builder-jammy-full  --publish --clear-cache
 ```
 * Quick test.
 ```sh
-docker run -d -p 9090:8080 --name sample-go <image-repo>
+docker run -d -p 9090:8080 --name kottayam-view <registry_name>/<repo_name>/kottayam-view:v1
 curl -s http://0.0.0.0:9090
+```
+
+***Deploy to Kubernetes***
+
+**Create Deployment**
+```sh
+kubectl create deployment kottayam-view --image=docker.io/sumanpf9/kottayam-view:v7 --replicas=1
+```
+**Expose as Service**
+```sh
+kubectl expose deploy/kottayam-view-7 --name kottayam-view-svc --type=LoadBalancer --port 80 --target-port=8080
 ```
 
 Note: Use command `pack suggest-builders` to see available builders to use
