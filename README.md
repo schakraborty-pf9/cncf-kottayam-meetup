@@ -18,7 +18,7 @@ docker run -d -p 9090:8080 --name kottayam-view <registry_name>/<repo_name>/kott
 curl -s http://0.0.0.0:9090
 ```
 
-***Deploy to Kubernetes***
+*****Deploy to Kubernetes*****
 
 **Create Deployment**
 ```sh
